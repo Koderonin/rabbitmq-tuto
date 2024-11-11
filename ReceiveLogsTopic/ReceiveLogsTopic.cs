@@ -25,8 +25,8 @@ public class ReceiveLogsDirect
             Password = "admin"
         };
 
-        using var connection = factory.CreateConnection();
-        using var channel = connection.CreateModel();
+        using IConnection? connection = factory.CreateConnection();
+        using IModel? channel = connection.CreateModel();
 
         channel.ExchangeDeclare(exchange: "topic_logs",
                                 type: ExchangeType.Topic);

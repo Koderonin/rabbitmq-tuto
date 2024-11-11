@@ -13,13 +13,14 @@ public class EmitLogTopic
             UserName = "vicen",
             Password = "admin"
         };
-        using var connection = factory.CreateConnection();
-        using var channel = connection.CreateModel();
+        
+        using IConnection? connection = factory.CreateConnection();
+        using IModel? channel = connection.CreateModel();
 
         channel.ExchangeDeclare(exchange: "topic_logs",
                                 type: ExchangeType.Topic);
         
-        var routingKey = (args.Length > 0) ? args[0] : "anonymous.info";
+        string? routingKey = (args.Length > 0) ? args[0] : "anonymous.info";
         
         string message = GetMessage(args);
         byte[] body = Encoding.UTF8.GetBytes(message);
